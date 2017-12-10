@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+import sys
 """
 this file is used to read the data from .csv file and do trend analysis for data between 1973 - 2017
 and predict trends for future from 2017 to 2047
@@ -25,7 +26,6 @@ def calcTrends(file_to_read,file_to_write):
     for line in file:
         # print(line)
         list = line.split(',')
-        # print(list[5][:-1].strip('%'))
         change = float(list[5][:-1].strip('%'))
         count += 1
         if count == 1:
