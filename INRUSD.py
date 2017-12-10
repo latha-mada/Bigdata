@@ -27,13 +27,17 @@ def calcTrends(file_to_read,file_to_write):
         list = line.split(',')
         # print(list[5][:-1].strip('%'))
         change = float(list[5][:-1].strip('%'))
-        total_change = total_change + change
         count += 1
         if count == 1:
             last_value = float(list[1])
 
+        # Disregarding the outliers which is not apt for predicting.
         if change > 10.00:
             print("{} : {}".format(list[0],change))
+            total_change = total_change - change
+
+
+        total_change = total_change + change
 
     avg_change = total_change/count
     print("avg change per month  = {0:.2f}".format(avg_change))
