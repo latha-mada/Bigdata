@@ -1,0 +1,90 @@
+{% extends "nesports/header.html" %} 
+{% load static %}
+
+{% block content %}
+<div class="block" style="background-image: url('/static/images/patriots1.jpg');">
+<h2 style="color: blue; text-shadow: 3px 2px red"> New England Patriots</h2>
+
+</div>
+
+<br/>
+<div class="dropdown" horizontal-align="right" position="absolute" right="0">
+  
+  <label>Statistics by</label> <select name="type">
+    <option value="Players">Players</option>
+    <option value="Teams">Teams</option>
+    <option value="League">League</option>
+    </select>
+    <br>
+  <label>year</label> <select name="year">
+    <option value="2017">2017</option>
+    <option value="2016">2016</option>
+    <option value="2015">2015</option>
+    <option value="2014">2014</option>
+  </select>
+  <br/>
+  
+  
+  <label>Category</label><select name="type">
+    <option value="Touchdowns">touchdowns</option>
+    <option value="2-PointConversion">2-pointconv</option>
+    <option value="RushingYards">Rushyards</option>
+    <option value="PassingYards">passyards</option>
+  </select>
+  
+</div>
+<div>
+<table>
+<tr>
+<td>{{data}}</td>
+<td> </td>
+</tr>
+</table>
+</div>
+<div>
+</div>
+<p>Click the button to add a new row at the first position of the table and then add cells and content.</p>
+
+<br>
+
+<button onclick="myTable()">Try it</button>
+
+<table>
+    <tbody id="tbody"></tbody>
+</table>
+
+
+
+<script>
+function myFunction() {
+    var table = document.getElementById("myTable");
+    var data = {{data}}
+    for(var rowCount = 0; rowCount < data.length; rowCount++)
+    {
+    	var row = table.insertRow(0);
+    	for(var cellCount = 0; cellCount < data[rowCount].length; cellCount++)
+    	{
+      		var cell1 = row.insertCell(cellCount);
+    		cell1.innerHTML = data[cellCount][rowCount];
+    	}
+    }
+}
+function myTable() {
+	var globalCounter = 0;
+	var tbody = document.getElementById('tbody');
+	obj = {1:2 3:4}
+	for (var i = 0; i < obj.length; i++) {
+	    var tr = "<tr>";
+	    	
+	    
+	    /* Must not forget the $ sign */
+	    tr += "<td>" + obj[i][j] + "</td>";
+	    }
+	    tr += "</tr>"
+	    /* We add the table row to the table body */
+	    tbody.innerHTML += tr;
+	}
+}
+</script>
+  
+{% endblock %}
