@@ -1,3 +1,7 @@
-year,team,score
-2018,patriots,100
-2018,packers,200
+year,player,team,play
+2016,gronk,patriots,100
+2016,rodgers,packers,200
+2017,eddle,patriots,100
+2017,hogan,patriots,100
+2015,mitchell,packers,200
+

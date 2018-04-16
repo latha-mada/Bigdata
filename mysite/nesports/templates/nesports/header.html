@@ -72,15 +72,43 @@ select {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+#dytable td, #dytable th {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+#dytable tr:nth-child(even){background-color: #f2f2f2;}
+
+#dytable tr:hover {background-color: #ddd;}
+
+#dytable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #7b817b;
+    color: white;
+}
 </style>
+<script type="text/javascript" src="/static/js/jquery-3.3.1.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>"
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#dytable').DataTable({
+	"lengthChange": false
+	});
+});
+</script>
 </head>
 <body>
 <div class="sidenav">
-  <a href="index">About</a>
-  <a href="patriots">Patriots</a>
-  <a href="celtics">Celtics</a>
-  <a href="bruins">Bruins</a>
-  <a href="redsox">RedSox</a>
+  <a href="{% url 'index' %}">About</a>
+  <a href="{% url 'patriots' %}">Patriots</a>
+  <a href="{% url 'celtics' %}">Celtics</a>
+  <a href="{% url 'bruins' %}">Bruins</a>
+  <a href="{% url 'redsox' %}">RedSox</a>
+
 </div>
 <div class="main">
   {% block content %}

@@ -6,85 +6,97 @@
 <h2 style="color: blue; text-shadow: 3px 2px red"> New England Patriots</h2>
 
 </div>
-
-<br/>
-<div class="dropdown" horizontal-align="right" position="absolute" right="0">
-  
-  <label>Statistics by</label> <select name="type">
-    <option value="Players">Players</option>
-    <option value="Teams">Teams</option>
-    <option value="League">League</option>
+<form action="{% url 'analyze' %}" method="post">
+  {% csrf_token %}
+    <select id="granularity" name="type">
+      <option value="Players">{{ gran }}</option>
+      <option value="Players">player</option>
+      <option value="Teams">team</option>
+      <option value="League">league</option>
     </select>
-    <br>
-  <label>year</label> <select name="year">
-    <option value="2017">2017</option>
-    <option value="2016">2016</option>
-    <option value="2015">2015</option>
-    <option value="2014">2014</option>
+    <select id="year" name="year">
+      <option value="2017">{{ year }}</option>
+      <option value="2017">2017</option>
+      <option value="2016">2016</option>
+      <option value="2015">2015</option>
+      <option value="2014">2014</option>
+      <option value="2013">2013</option>
+    </select>
+  <select id="playaggr" name="play">
+    <option value="touchdowns">{{ play }}</option>
+    <option value="touchdowns">touchdowns</option>
+    <option value="two_pt">twp_pt</option>
+    <option value="rushyards">rushyards</option>
+    <option value="passyards">passyards</option>
   </select>
-  <br/>
-  
-  
-  <label>Category</label><select name="type">
-    <option value="Touchdowns">touchdowns</option>
-    <option value="2-PointConversion">2-pointconv</option>
-    <option value="RushingYards">Rushyards</option>
-    <option value="PassingYards">passyards</option>
-  </select>
-  
-</div>
-<div>
-<table>
-<tr>
-<td>{{data}}</td>
-<td> </td>
-</tr>
+  <input type="submit" name="submit">
+
+<table id="dytable">
+  <thead>
+  <tr><th>Team</th><th>Player</th><th>Aggregate</th></tr>
+  </thead>
+  {% for row in nfl %}
+  <tr>
+    <td>{{ row.team }}</td>
+    <td>{{ row.player }}</td>
+    {% if row.touchdowns %}
+      <td>{{ row.touchdowns }}</td>
+    {% endif %}
+    {% if row.passyards %}
+      <td>{{ row.passyards }}</td>
+    {% endif %}
+    {% if row.rushyards %}
+      <td>{{ row.rushyards }}</td>
+    {% endif %}
+    {% if row.two_pt %}
+      <td>{{ row.two_pt }}</td>
+    {% endif %}
+
+  </tr>
+  {% endfor %}
 </table>
-</div>
-<div>
-</div>
-<p>Click the button to add a new row at the first position of the table and then add cells and content.</p>
-
-<br>
-
-<button onclick="myTable()">Try it</button>
-
-<table>
-    <tbody id="tbody"></tbody>
-</table>
-
-
+</form>
 
 <script>
 function myFunction() {
-    var table = document.getElementById("myTable");
-    var data = {{data}}
-    for(var rowCount = 0; rowCount < data.length; rowCount++)
-    {
-    	var row = table.insertRow(0);
-    	for(var cellCount = 0; cellCount < data[rowCount].length; cellCount++)
-    	{
-      		var cell1 = row.insertCell(cellCount);
-    		cell1.innerHTML = data[cellCount][rowCount];
-    	}
-    }
+    document.getElementById("gran").value = document.getElementById("granularity").value;
+    document.getElementById("season").value = document.getElementById("year").value;
+    document.getElementById("aggr").value = document.getElementById("playaggr").value;
 }
-function myTable() {
+function printTable() {
 	var globalCounter = 0;
-	var tbody = document.getElementById('tbody');
-	obj = {1:2 3:4}
-	for (var i = 0; i < obj.length; i++) {
-	    var tr = "<tr>";
-	    	
-	    
-	    /* Must not forget the $ sign */
-	    tr += "<td>" + obj[i][j] + "</td>";
+	var tbody = document.getElementById('t_body');
+	obj = [['num1', 'num2'],[1, 2],[3, 4]];
+	var heading = obj[0];
+	var t = "<tr><td>" + heading[0] + "</td><td>" + heading[1] + "</td><tr>";
+	for (var i = 1; i < obj.length; i++) {
+	    t += "<tr>";
+	    cols = obj[i];
+	    for (var j = 0; j < cols.length; j++){
+	        t += "<td>" + cols[j] + "</td>";
 	    }
-	    tr += "</tr>"
-	    /* We add the table row to the table body */
-	    tbody.innerHTML += tr;
+	    t += "</tr>";
+	 }
+
+     /* We add the table row to the table body */
+     tbody.innerHTML = t;
 	}
-}
+function printModel() {
+	var globalCounter = 0;
+	var tbody = document.getElementById('t_body');
+	obj = "{{nfl}}";
+	count = obj.objects.count();
+	for (var i = 1; i < count; i++){
+	    t += "<tr>";
+	    t += "<td>"+obj.objects.get(id=i).player+"</td>";
+	    t += "<td>"+obj.objects.get(id=i).team+"</td>";
+	    t += "</tr>";
+	 }
+
+     /* We add the table row to the table body */
+     tbody.innerHTML = t;
+	}
+
 </script>
   
 {% endblock %}

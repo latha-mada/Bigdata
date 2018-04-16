@@ -5,7 +5,7 @@ import subprocess
 import time
 import re
 import datetime
-retain_indexes = [1,9,2,4,16,17,19,21,23,28,29,30,31,32,34,35,38,39,45,46,53,54,55,58,66,67,70,71]
+retain_indexes = [16, 19, 21, 23, 28, 29, 40, 42, 45]
 retain_list = []
 app_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 in_path = os.path.join(app_root, 'input')
@@ -25,10 +25,9 @@ while True:
     proc = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = proc.communicate()
     list = out.splitlines()
-    print("list = ", list)
+    # print("list = ", list)
     if len(list) > 0:
-        print(" inside if")
-        print(list)
+        # print(list)
         # stop = True
         time.sleep(1)
         file_name = list[0]
@@ -37,30 +36,41 @@ while True:
         outfile = os.path.join(out_path, file_name)
         if not os.path.isdir(out_path):
             os.mkdir(out_path)
-        print(infile, outfile)
+        #print(infile, outfile)
         with open(infile, 'rb') as fin, open(outfile, 'wb') as fout:
             i = 0
             for line in fin:
 
                 if i == 0:
                     i += 1
-                    print(line)
+                    #print(line)
                     # sys.exit(0)
                     continue
                 else:
                     retain_list = [season]
                     # print line
-                    print("___________________")
-                    fields = line.split(',')
-                    if fields[67] =='NA' or fields[66]=='NA' or fields[16]=='NA' or fields[17]=='NA':
+                    # print("___________________")
+                    # remove the description filed
+                    try:
+                        fields = line.split(',')
+                        if fields[16]=="NA" or not bool(fields[16]):
+                            print season, fields[16], fields[19], fields[21], fields[23], fields[28], fields[29]
+                        if fields[28] =='NA' or fields[16]=='NA' or fields[16]=='' or fields[28] not in ['Run', 'Pass']:
+                            # print fields[28]
+                            continue
+                        # print("length of fields = {}, {}".format(len(fields), i))
+                        i += 1
+                        for index in retain_indexes:
+
+                            retain_list.append(fields[index])
+                        # print(','.join(retain_list))
+                        fout.write(','.join(retain_list))
+                        fout.write(os.linesep)
+                    except IndexError:
                         continue
-                    # print("length of fields = {}, {}".format(len(fields), i))
-                    i += 1
-                    for index in retain_indexes:
-                        retain_list.append(fields[index])
-                    print(','.join(retain_list))
-                    fout.write(','.join(retain_list))
-                    fout.write(os.linesep)
+                    except Exception as e:
+                        print e
+                        continue
         bak_file = os.path.basename(infile) + '_in'
         bak_file_path = os.path.join(bak_path, bak_file)
         print(bak_file)
@@ -71,7 +81,6 @@ while True:
         backup = subprocess.Popen(bak_cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = backup.communicate()
         print("out = {}".format(out))
-
 
     else:
         print("input is empty. Will keep polling")
