@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
+<h1 class="logo" style="color: #ffd633; text-shadow: 3px 3px black"> Boston Bruins</h1>
 <div class="block" style="background-image: url('/static/images/bruins2.jpg');">
-<h2 style="color: yellow; text-shadow: 3px 3px black"> Boston Bruins</h2>
+<h2></h2>
 </div>
 <form action="{% url 'analyze' %}" method="post">
   {% csrf_token %}

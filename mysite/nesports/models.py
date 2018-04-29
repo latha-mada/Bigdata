@@ -15,7 +15,7 @@ class Nfl(models.Model):
     play = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.year + ' - ' + self.team
+        return (str(self.year) + ' - ' + self.team)
 
 
 class NflData(models.Model):

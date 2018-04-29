@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block content %}
+<h1 class="logo" style="color: #004280; text-shadow: 3px 2px white"> New England Patriots</h1>
 <div class="block" style="background-image: url('/static/images/patriots1.jpg');">
-<h2 style="color: blue; text-shadow: 3px 2px red"> New England Patriots</h2>
-
+<h2 ></h2>
 </div>
 <form action="{% url 'analyze' %}" method="post">
   {% csrf_token %}
     <select id="granularity" name="type">
-      <option value="Players">{{ gran }}</option>
-      <option value="Players">player</option>
-      <option value="Teams">team</option>
-      <option value="League">league</option>
+      <option value="player">{{ gran }}</option>
+      <option value="player">player</option>
+      <option value="team">team</option>
+      <option value="league">league</option>
     </select>
     <select id="year" name="year">
       <option value="2017">{{ year }}</option>
@@ -25,11 +25,11 @@
   <select id="playaggr" name="play">
     <option value="touchdowns">{{ play }}</option>
     <option value="touchdowns">touchdowns</option>
-    <option value="two_pt">twp_pt</option>
     <option value="rushyards">rushyards</option>
+    <option value="two_pt">two_pt</option>
     <option value="passyards">passyards</option>
   </select>
-  <input type="submit" name="submit">
+  <input id="submit" type="submit" name="submit">
 
 <table id="dytable">
   <thead>

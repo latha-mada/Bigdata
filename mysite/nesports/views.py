@@ -18,7 +18,7 @@ def images(request):
 
 def patriots(request):
 
-    nfl = NflData.objects.filter(year='2017').extra(select={'val': 'passyards'}).order_by('val').reverse()[:20].values('team', 'player','touchdowns')
+    nfl = NflData.objects.filter(year='2017').extra(select={'val': 'passyards'}).order_by('val').reverse()[:30].values('team', 'player','touchdowns')
 
     return render(request, 'nesports/patriots.html', {'nfl': nfl, 'year': '2017', 'play': 'touchdowns', 'gran': 'player'})
 
@@ -28,7 +28,7 @@ def analyze(request):
     gran = request.POST['type']
     print("------------\nyear from the form = {}\n------------------\n".format(y))
     # nfl = NflData.objects.raw('Select * FROM nesports_nfldata')
-    nfl = NflData.objects.filter(year=y).order_by(play).reverse()[:20].values('team', 'player', play)
+    nfl = NflData.objects.filter(year=y).order_by(play).reverse()[:30].values('team', 'player', play)
     return render(request, 'nesports/patriots.html', {'nfl': nfl, 'year': y, 'play': play, 'gran': gran})
 
 def analyzem(request):
@@ -37,7 +37,7 @@ def analyzem(request):
     gran = request.POST['type']
     print("------------\nyear from the form = {}\n------------------\n".format(y))
     # nfl = NflData.objects.raw('Select * FROM nesports_nfldata')
-    mlb = MlbData.objects.filter(year=y).order_by(play).reverse()[:20].values('team', 'player', play)
+    mlb = MlbData.objects.filter(year=y).order_by(play).reverse()[:30].values('team', 'player', play)
     return render(request, 'nesports/redsox.html', {'mlb': mlb, 'year': y, 'play': play, 'gran': gran})
 
 def celtics(request):
