@@ -31,7 +31,7 @@ class TransferData(DataProcess):
             for file in files:
                 file_path = os.path.join(self.input_path, file)
                 scp_cmd = 'scp {} {}@{}:/{}'.format(file_path, remote_user, remote_machine, self.output_path)
-                self.logger.info("----- scp_cmd = ", scp_cmd)
+                self.logger.info("----- scp_cmd = {}".format(scp_cmd))
                 pexpect.run(scp_cmd)
                 # take the back up of the transfered file
                 status = self.take_backup(file_path)

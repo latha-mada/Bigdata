@@ -53,24 +53,20 @@ class StartProcesses(object):
         timeout = time.time() + 1800  # keep polling for raw data for 30 mins
         while time.time() < timeout:
             if not self.move_raw_data.input_path:
-                self.logger.info("{} is not a valid input path for raw data....Please check the path and try again: "
-                      "Bye...".format(self.move_raw_data.input_path))
-                sys.exit(1)
+                self.logger.info("{} is not a valid input path for raw data....Please check the path and try again:".format(self.move_raw_data.input_path))
+                break 
             self.move_raw_data.move_raw_data()
             if not self.filter_data.input_path:
-                self.logger.info("{} is not a valid path to filter data....Please check the path and try again: "
-                      "Bye...".format(self.filter_data.input_path))
-                sys.exit(1)
+                self.logger.info("{} is not a valid path to filter data....Please check the path and try again: ".format(self.filter_data.input_path))
+                break
             self.filter_data.filter_data()
             if not self.transfer_data.input_path:
-                self.logger.info("{} is not a valid path for transfer data....Please check the path and try again: "
-                      "Bye...".format(self.transfer_data.input_path))
-                sys.exit(1)
+                self.logger.info("{} is not a valid path for transfer data....Please check the path and try again: ".format(self.transfer_data.input_path))
+                break 
             self.transfer_data.transfer_data(self.remote_user, self.remote_machine)
             if not self.store_data.input_path:
-                self.logger.info("{} is not a valid input path for stored process....Please check the path and try again: "
-                      "Bye...".format(self.store_data.input_path))
-                sys.exit(1)
+                self.logger.info("{} is not a valid input path for stored process....Please check the path and try again: ".format(self.store_data.input_path))
+                break 
             self.store_data.store_data()
 
             self.logger.info("Success: Finished all the processes .... Will wait for 10secs and poll for Raw data")

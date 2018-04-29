@@ -26,7 +26,7 @@ class StoreData(DataProcess):
             status = self.create_backup_path()
             assert status, "Error: could not create backup folder"
             for file in files:
-                self.logger.info("------------file = ", file)
+                self.logger.info("------------file = {}".format(file))
                 season = re.search(r'.*_(.*)\..*', file).group(1)
                 hdfs_path = os.path.join(self.output_path, season)
                 mkdir = '{} -mkdir -p {}'.format(hdfs_cmd, hdfs_path)
